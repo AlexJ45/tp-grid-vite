@@ -1,4 +1,9 @@
 @import "vendors/reset.scss";
+@mixin large {
+  @media (min-width: 1400px) {
+    @content;
+  }
+}
 * {
   box-sizing: border-box;
 }
@@ -8,6 +13,11 @@ img {
 }
 .element {
   background-color: lightgrey;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  font-size: 0.65rem;
 }
 $types: alkaliMetal lanthanide nobleGas transitionMetal postTransitionMetal
   alkalineEarthMetal actinide metalloid otherNonMetal;
@@ -15,6 +25,23 @@ $color: 0;
 @each $type in $types {
   $color: $color + 30;
   .element--#{$type} {
-    background-color: hsl($color 80% 40%);
+    background-color: hsl($color 80% 40% / 65%);
+  }
+}
+@for $i from 1 through 18 {
+  .element[data-group^="#{$i}"] {
+    grid-column: $i;
+  }
+}
+
+.table {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 0.5rem;
+  padding: 0.5rem;
+  @include large {
+    grid-template-columns: repeat(18, 1fr);
+    grid-template-rows: repeat(7, 1fr);
   }
 }
